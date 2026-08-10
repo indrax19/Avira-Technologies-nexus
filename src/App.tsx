@@ -12,6 +12,8 @@ import { NetworkStatusBar } from "@/components/NetworkStatusBar";
 import { Toaster } from "@/components/ui/sonner";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
+import MasterDashboard from "@/pages/MasterDashboard";
+import CompanyDashboard from "@/pages/CompanyDashboard";
 import NotFound from "@/pages/NotFound";
 
 // Lazy load all route components for code splitting
@@ -70,6 +72,16 @@ const App = () => (
             <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route path="/" element={<MasterDashboard />} />
+              <Route path="/companies/:companyId" element={<CompanyDashboard />} />
+            </Route>
             <Route
               element={
                 <ProtectedRoute>
