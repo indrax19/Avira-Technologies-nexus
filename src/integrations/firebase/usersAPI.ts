@@ -231,21 +231,6 @@ export const usersAPI = {
         throw new Error("Password must be at least 6 characters long.");
       }
 
-      // Check if email already exists in Firestore
-      try {
-        const existingUser = await this.getByEmail(email);
-        if (existingUser) {
-          throw new Error("This email is already registered. Please use a different email.");
-        }
-      } catch (error: any) {
-        // Silently ignore AbortError during email check
-        if (error.name === "AbortError" || error.code === "aborted") {
-          // Continue with creation - if email exists, auth creation will fail
-        } else {
-          throw error;
-        }
-      }
-
       // Create Firebase Auth user
       let userCredential;
       try {
@@ -268,7 +253,7 @@ export const usersAPI = {
       }
 
       // Create Firestore user record
-      const docRef = doc(collection(db, USERS_COLLECTION));
+      const docRef = doc(db, USERS_COLLECTION, userCredential.user.uid);
       const userData = {
         email: email.toLowerCase(),
         fullName,

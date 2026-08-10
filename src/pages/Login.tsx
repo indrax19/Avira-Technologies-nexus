@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -197,6 +197,10 @@ export default function Login() {
                 {loading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
+
+            <p className="mt-5 text-center text-sm text-slate-600">
+              Don&apos;t have an account? <Link to="/signup" className="font-semibold text-[#273C70] hover:underline">Create one</Link>
+            </p>
 
             <div className="mt-6 sm:mt-8 text-center text-xs text-slate-500">
               <p>Powered by Avira Technologies</p>

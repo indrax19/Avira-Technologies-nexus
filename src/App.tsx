@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { NotificationPermissionPrompt } from "@/components/NotificationPermissionPrompt";
 import { NetworkStatusBar } from "@/components/NetworkStatusBar";
 import Login from "@/pages/Login";
+import Signup from "@/pages/Signup";
 import NotFound from "@/pages/NotFound";
 
 // Lazy load all route components for code splitting
@@ -89,6 +90,7 @@ const App = () => (
             <NotificationPermissionPrompt />
             <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route
               element={
                 <ProtectedRoute>
