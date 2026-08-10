@@ -1,4 +1,4 @@
-import { Package, Users, Settings, Shield, CheckSquare, Receipt, Building2 } from "lucide-react";
+import { LayoutDashboard, Package, Users, Settings, Shield, CheckSquare, Receipt, Building2 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const navItems = [
+  { title: "Master Dashboard", url: "/", icon: LayoutDashboard },
   { title: "Invoices", url: "/invoices", icon: Receipt, permission: "invoices" },
   { title: "Projects Tracking", url: "/projects", icon: CheckSquare, permission: "project-tracking" },
   { title: "Outreach Mill", url: "/outreach-mill", icon: Building2, permission: "outreach-mill" },
@@ -42,7 +43,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" className="bg-gradient-to-b from-slate-900 to-slate-800 border-r border-slate-700">
       <SidebarHeader className="border-b border-slate-700 px-4 py-3">
-        <Link to="/invoices" onClick={handleNavClick} className="flex items-center gap-3 hover:opacity-90 transition-all duration-200 cursor-pointer">
+        <Link to="/" onClick={handleNavClick} className="flex items-center gap-3 hover:opacity-90 transition-all duration-200 cursor-pointer">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg">
             <Package className="h-5 w-5 text-white" />
           </div>

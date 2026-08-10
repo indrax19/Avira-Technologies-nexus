@@ -32,7 +32,7 @@ export function AppLayout() {
             <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
               <SidebarTrigger className="h-8 w-8 sm:h-10 sm:w-10" />
               <Link
-                to="/invoices"
+                to="/"
                 className="text-xs sm:text-sm font-semibold text-foreground hover:text-primary transition-colors cursor-pointer truncate"
               >
                 Project Management Portal
