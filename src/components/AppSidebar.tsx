@@ -1,9 +1,7 @@
-import { LayoutDashboard, FolderOpen, ScanBarcode, FileText, History, Package, Users, Truck, Settings, MapPin, Shield, CheckSquare, BookOpen, Receipt, AlertCircle, ClipboardList, Building2 } from "lucide-react";
+import { Package, Users, Settings, Shield, CheckSquare, Receipt, Building2 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { useUnresolvedComplaintsCount } from "@/hooks/useUnresolvedComplaintsCount";
-import { Badge } from "@/components/ui/badge";
 import {
   Sidebar,
   SidebarContent,
@@ -18,21 +16,10 @@ import {
 } from "@/components/ui/sidebar";
 
 const navItems = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard, permission: "dashboard" },
-  { title: "Inventory", url: "/categories", icon: FolderOpen, permission: "inventory" },
-  { title: "Scan", url: "/scan", icon: ScanBarcode, permission: "scan" },
-  { title: "Personal Inventory", url: "/personal-inventory", icon: Users, permission: "personal-inventory" },
-  { title: "Delivery Challans", url: "/delivery-challans", icon: Truck, permission: "delivery-challans" },
   { title: "Invoices", url: "/invoices", icon: Receipt, permission: "invoices" },
-  { title: "Technical Details", url: "/sites", icon: MapPin, permission: "sites" },
-  { title: "Support Tickets", url: "/complaints", icon: AlertCircle, permission: "complaints" },
   { title: "Projects Tracking", url: "/projects", icon: CheckSquare, permission: "project-tracking" },
   { title: "Outreach Mill", url: "/outreach-mill", icon: Building2, permission: "outreach-mill" },
   { title: "Customer Data", url: "/customer-data", icon: Users, permission: "customer-data" },
-  { title: "Knowledge Base", url: "/knowledge-base", icon: BookOpen },
-  { title: "Reports", url: "/reports", icon: FileText, permission: "reports" },
-  { title: "Survey Reports", url: "/survey-reports", icon: ClipboardList, permission: "survey-reports" },
-  { title: "Transactions", url: "/transactions", icon: History, permission: "transactions" },
   { title: "Settings", url: "/settings", icon: Settings, permission: "settings" },
 ];
 
@@ -45,8 +32,6 @@ export function AppSidebar() {
   const { state, setOpenMobile, isMobile } = useSidebar();
   const collapsed = state === "collapsed";
   const { isAdmin, appUser } = useAuth();
-  const unresolvedComplaintsCount = useUnresolvedComplaintsCount();
-
   // Close mobile sidebar when a menu item is clicked
   const handleNavClick = () => {
     if (isMobile) {
@@ -57,7 +42,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" className="bg-gradient-to-b from-slate-900 to-slate-800 border-r border-slate-700">
       <SidebarHeader className="border-b border-slate-700 px-4 py-3">
-        <Link to="/" onClick={handleNavClick} className="flex items-center gap-3 hover:opacity-90 transition-all duration-200 cursor-pointer">
+        <Link to="/invoices" onClick={handleNavClick} className="flex items-center gap-3 hover:opacity-90 transition-all duration-200 cursor-pointer">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg">
             <Package className="h-5 w-5 text-white" />
           </div>
@@ -96,11 +81,6 @@ export function AppSidebar() {
                           <item.icon className="mr-2 h-4 w-4 flex-shrink-0" />
                           {!collapsed && <span className="text-sm">{item.title}</span>}
                         </NavLink>
-                        {!collapsed && item.title === "Support Tickets" && unresolvedComplaintsCount > 0 && (
-                          <Badge variant="destructive" className="ml-2 h-5 min-w-5 flex items-center justify-center rounded-full p-0 text-xs font-bold bg-red-500 hover:bg-red-600">
-                            {unresolvedComplaintsCount > 99 ? '99+' : unresolvedComplaintsCount}
-                          </Badge>
-                        )}
                       </div>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

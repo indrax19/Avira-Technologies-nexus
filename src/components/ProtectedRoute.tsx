@@ -30,13 +30,13 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   if (requireAdmin && !isAdmin) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/invoices" replace />;
   }
 
   if (requiredPermission) {
     // Admins have access to all pages
     if (!isAdmin && !appUser?.permissions?.includes(requiredPermission)) {
-      return <Navigate to="/" replace />;
+      return <Navigate to="/invoices" replace />;
     }
   }
 

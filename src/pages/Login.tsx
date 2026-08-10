@@ -33,7 +33,7 @@ export default function Login() {
 
       if (welcomeTimerRef.current) clearTimeout(welcomeTimerRef.current);
       welcomeTimerRef.current = setTimeout(() => {
-        navigate("/");
+        navigate("/invoices");
       }, 2500);
       return;
     } catch (error: any) {

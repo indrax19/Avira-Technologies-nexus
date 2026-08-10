@@ -6,14 +6,11 @@ import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { toast } from "sonner";
-import { useComplaintNotifications } from "@/hooks/useComplaintNotifications";
 
 export function AppLayout() {
   const { logout } = useAuth();
   const { pathname } = useLocation();
   const mainRef = useRef<HTMLElement>(null);
-  useComplaintNotifications();
-
   useLayoutEffect(() => {
     mainRef.current?.scrollTo(0, 0);
   }, [pathname]);
@@ -35,7 +32,7 @@ export function AppLayout() {
             <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
               <SidebarTrigger className="h-8 w-8 sm:h-10 sm:w-10" />
               <Link
-                to="/"
+                to="/invoices"
                 className="text-xs sm:text-sm font-semibold text-foreground hover:text-primary transition-colors cursor-pointer truncate"
               >
                 Project Management Portal
