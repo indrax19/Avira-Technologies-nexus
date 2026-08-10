@@ -277,7 +277,13 @@ export const usersAPI = {
         } catch (deleteError) {
           console.error("Failed to clean up auth user:", deleteError);
         }
-        throw new Error("Failed to create user record. Please try again.");
+        const profileError = new Error(
+          firestoreError.code === "permission-denied"
+            ? "Firebase blocked the profile write."
+            : firestoreError.message || "Failed to create user record."
+        ) as Error & { code?: string };
+        profileError.code = firestoreError.code;
+        throw profileError;
       }
 
       // Sign out the newly created user to prevent accidental login
@@ -294,9 +300,11 @@ export const usersAPI = {
       } as User;
     } catch (error: any) {
       console.error("Error creating user with password:", error);
-      throw new Error(
+      const normalizedError = new Error(
         error.message || "Failed to create user. Please try again."
-      );
+      ) as Error & { code?: string };
+      normalizedError.code = error.code;
+      throw normalizedError;
     }
   },
 

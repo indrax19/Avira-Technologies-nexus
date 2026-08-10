@@ -9,6 +9,7 @@ import { AppLayout } from "@/components/AppLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { NotificationPermissionPrompt } from "@/components/NotificationPermissionPrompt";
 import { NetworkStatusBar } from "@/components/NetworkStatusBar";
+import { Toaster } from "@/components/ui/sonner";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
 import NotFound from "@/pages/NotFound";
@@ -83,6 +84,7 @@ const queryClient = new QueryClient({
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <Toaster />
       <NetworkStatusBar />
       <BrowserRouter>
         <AuthProvider>

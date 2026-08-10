@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { AlertCircle, Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,18 +14,21 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    setErrorMessage(null);
+
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      setErrorMessage("Passwords do not match");
       return;
     }
 
     if (password.length < 6) {
-      toast.error("Password must be at least 6 characters");
+      setErrorMessage("Password must be at least 6 characters");
       return;
     }
 
@@ -44,9 +47,13 @@ export default function Signup() {
         message = "Email/password signup is not enabled in Firebase yet.";
       } else if (code === "auth/network-request-failed") {
         message = "Network connection error. Please try again.";
+      } else if (code === "permission-denied") {
+        message = "Firebase blocked the profile write. Check Firestore rules for the users collection.";
       }
 
-      toast.error(message);
+      const visibleMessage = code ? `${message} (${code})` : message;
+      setErrorMessage(visibleMessage);
+      toast.error(visibleMessage);
     } finally {
       setLoading(false);
     }
@@ -73,6 +80,16 @@ export default function Signup() {
               Sign up for access to the Avira Project Management Portal.
             </p>
           </div>
+
+          {errorMessage && (
+            <div
+              role="alert"
+              className="mb-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800 sm:rounded-xl"
+            >
+              <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
+              <p>{errorMessage}</p>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             <div className="space-y-2">
